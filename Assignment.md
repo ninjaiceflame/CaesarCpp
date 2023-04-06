@@ -26,7 +26,7 @@ All programs are to be checked off by due date. Check off involves showing and t
 		- decrypt the ciphertext
 		- output the result to a plaintext file (all file names dependent on user). 
 
-1. (50 Pts) Write a C++ program that will perform the cryptanalysis of the Caesar Cipher. 
+2. (50 Pts) Write a C++ program that will perform the cryptanalysis of the Caesar Cipher. 
 
 	Namely, given some ciphertext and no key, the program will recover the plaintext. 
 	
@@ -34,4 +34,4 @@ All programs are to be checked off by due date. Check off involves showing and t
 	
 	The user should not be required to read 26 different files and pick out the correct plaintext among them. The program should reject as many non-plaintext files as possible. The specification should target the same student in part 1. Like all cryptanalysis, one must make some assumptions based on knowledge of the language. Assume the text is in English and make some good assumptions and include them in the comments of the program!
 
-1. Due date Wednesday Week 3 at end of lecture
+3. Due date Wednesday Week 3 at end of lecture
