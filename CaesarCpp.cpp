@@ -1,18 +1,26 @@
-// CaesarCpp.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
-#include <fstream>
-#include <ostream>
-
+#include <string>
+#include <fstream>  //Read and write files
 
 using std::cout;
 using std::cin;
 using std::endl;
+using std::fstream;
+using std::string;
+
+string encryptFile(fstream file, int key);
+string decryptFile(fstream file, int key);
 
 int main()
 {
+    //File to read and write to:
+    fstream plainText;
+    fstream cipherText;
+    //Char to read for menu selection
     char* input = NULL;
+
+
     do
     {
         system("CLS");
@@ -25,6 +33,7 @@ int main()
         {
             //Encrypt
             system("CLS");
+
         }
         else if (input == "D" || input == "d")
         {
@@ -40,4 +49,14 @@ int main()
     } while (input != "X" || input != "x");
 
     return 0;
+}
+
+string encryptFile(fstream file, int key)
+{
+    
+}
+
+string decryptFile(fstream file, int key)
+{
+
 }
