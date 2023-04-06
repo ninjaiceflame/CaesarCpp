@@ -37,6 +37,9 @@ int main()
             system("CLS");
             cout << "Encrypt Selected!" << endl;
 
+            //Read file from input and create handle
+
+            //encryptFile(file_handle, key);
 
         }
         else if (input == 'D' || input == 'd')
@@ -44,6 +47,10 @@ int main()
             //Decrypt
             system("CLS");
             cout << "Decrypt Selected!" << endl;
+
+            //Read file from input and create handle
+
+            //decryptFile(file_handle, key);
         }
         else
         {
