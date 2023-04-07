@@ -64,6 +64,8 @@ void encryptProcessInput()
     fstream output_file;
     bool valid_path_entered = false;
 
+
+    //Get input for file to process and open it
     do
     {
         //Encrypt
@@ -91,6 +93,7 @@ void encryptProcessInput()
     cout << "Enter Key: ";
     cin >> key;
 
+    //Open output file based on name from input file
     output_file.open(output_file_path, std::fstream::out | std::fstream::trunc);
     if (!output_file)
     {
@@ -115,6 +118,7 @@ void decryptProcessInput()
     fstream output_file;
     bool valid_path_entered = false;
 
+    //Get input for file to process and open it
     do
     {
         //decrypt
@@ -140,6 +144,7 @@ void decryptProcessInput()
     cout << "Enter Key: ";
     cin >> key;
 
+    //Open output file. Remove ".encrypted" suffix if present.
     output_file_path = input_file_path;
     size_t index = output_file_path.find(".encrypted");
     if (index != string::npos)
