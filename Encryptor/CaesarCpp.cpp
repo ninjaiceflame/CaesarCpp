@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>  //Read and write files
+#include <chrono>   //For sleep
+#include <thread>   //For sleep
 
 using std::cout;
 using std::cin;
@@ -11,8 +13,8 @@ using std::string;
 
 string help_message = "Do you want to Encrypt [E] or Decrypt [D] or exit [X]";
 
-void encryptFile(fstream& input_file, fstream& output_file, int key);
-void decryptFile(fstream& input_file, fstream& output_file, int key);
+string encryptFile(fstream& input_file, fstream& output_file, int key);
+string decryptFile(fstream& input_file, fstream& output_file, int key);
 
 void encryptProcessInput();
 void decryptProcessInput();
@@ -48,8 +50,6 @@ int main()
             system("CLS");
         }
     } while (toupper(input) != 'X');
-    
-
 
     return 0;
 }
@@ -75,15 +75,22 @@ void encryptProcessInput()
         //Read file from input and create handle
         cin >> input_file_path;
 
+        //Exit if 'x' is entered
         if ((input_file_path[0] == 'x' || input_file_path[0] == 'X') && input_file_path.length() == 1)
         {
             return;
         }
 
+        //Open the file
         input_file.open(input_file_path, std::fstream::in);
         if (input_file)
         {
             valid_path_entered = true;
+        }
+        else
+        {
+            cout << "File not found, Please try again:" << endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
 
         output_file_path = input_file_path + ".encrypted";
@@ -98,6 +105,7 @@ void encryptProcessInput()
     if (!output_file)
     {
         cout << "Could not create output file. Aborting." << endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         input_file.close();
         return;
     }
@@ -133,6 +141,7 @@ void decryptProcessInput()
             return;
         }
 
+        //Open the file
         input_file.open(input_file_path, std::fstream::in);
         if (input_file)
         {
@@ -156,6 +165,7 @@ void decryptProcessInput()
         output_file_path = "decrypted_" + input_file_path;
     }
 
+    //Open the file
     output_file.open(output_file_path, std::fstream::out | std::fstream::trunc);
     if (!output_file)
     {
@@ -170,20 +180,135 @@ void decryptProcessInput()
     decryptFile(input_file, output_file, atoi(key.c_str()));
 }
 
-void encryptFile(fstream& input_file, fstream& output_file, int key)
+string encryptFile(fstream& input_file, fstream& output_file, int key)
 {
     //Perform encryption and save to output file
+    string inputStringText;
+    string outputStringText;
+
+    //Read each line of the file into a string
+    while (getline(input_file, inputStringText))
+    {
+        //Convert string to c-string
+        const char* charText = inputStringText.c_str();
+
+        int length = strlen(charText);
+        //Convert string tp uppercase and shift
+        for (int i = 0; i < length; i++)
+        {   
+            //cout << toupper(charText[i]);
+            string temp;
+            temp += static_cast<char>(toupper( charText[i]) + (key % 26) );
+
+            outputStringText = outputStringText + temp;
+           
+            /*  Char:   Decimal:
+                A	    65
+                B	    66
+                C	    67
+                D	    68
+                E	    69
+                F	    70
+                G	    71
+                H	    72
+                I	    73
+                J	    74
+                K	    75
+                L	    76
+                M	    77
+                N	    78
+                O	    79
+                P	    80
+                Q	    81
+                R	    82
+                S	    83
+                T	    84
+                U	    85
+                V	    86
+                W	    87
+                X	    88
+                Y	    89
+                Z	    90
+            */          
+        }
+        
+        //Prints encrypted test to console
+        cout << endl << outputStringText << endl;
+
+        //Output cipher text to encrypted file
+        output_file << outputStringText << endl;
+    }
 
     //Close files
     input_file.close();
     output_file.close();
+
+    return outputStringText;
 }
 
-void decryptFile(fstream& input_file, fstream& output_file, int key)
+string decryptFile(fstream& input_file, fstream& output_file, int key)
 {
     //Perform decryption and save to output file
+    string inputStringText;
+    string outputStringText;
+
+    //Read each line of the file into a string
+    while (getline(input_file, inputStringText))
+    {
+        //Convert string to c-string
+        const char* charText = inputStringText.c_str();
+
+        int length = strlen(charText);
+
+        //Convert string tp uppercase and shift
+        for (int i = 0; i < length; i++)
+        {
+            //cout << toupper(charText[i]);
+            string temp;
+            temp += static_cast<char>(toupper(charText[i]) - (key % 26));
+
+            outputStringText = outputStringText + temp;
+
+            /*  Char:   Decimal:
+                A	    65
+                B	    66
+                C	    67
+                D	    68
+                E	    69
+                F	    70
+                G	    71
+                H	    72
+                I	    73
+                J	    74
+                K	    75
+                L	    76
+                M	    77
+                N	    78
+                O	    79
+                P	    80
+                Q	    81
+                R	    82
+                S	    83
+                T	    84
+                U	    85
+                V	    86
+                W	    87
+                X	    88
+                Y	    89
+                Z	    90
+            */
+        }
+
+        //Prints decrypted text to console
+        cout << endl << outputStringText << endl;
+
+        //Output cipher text to decrypted file
+        output_file << outputStringText << endl;
+    }
 
     //Close files
     input_file.close();
     output_file.close();
+
+    return outputStringText;
 }
